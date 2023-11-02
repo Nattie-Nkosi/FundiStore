@@ -21,6 +21,21 @@ function App() {
         default: paletteType === "light" ? "#eaeaea" : "#121212",
       },
     },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          "::-webkit-scrollbar": {
+            // For Webkit browsers like Chrome, Safari
+            width: 0,
+            background: "transparent",
+          },
+          "*": {
+            // For Firefox
+            scrollbarWidth: "none",
+          },
+        },
+      },
+    },
   });
 
   function handleThemeChange() {
