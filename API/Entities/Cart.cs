@@ -10,20 +10,17 @@ namespace API.Entities
         // Method to add an item to the cart
         public void AddItem(Product product, int quantity)
         {
+            // Check if the product does not exist in the cart (i.e., no item with the same ProductId)
+            if(Items.All(item => item.ProductId != product.Id))
+            {
+                // If it doesn't exist, add a new CartItem to Items with the specified product and quantity
+                Items.Add(new CartItem{Product = product, Quantity = quantity});
+            }
+
             // Look for an existing item in the cart that matches the product Id
             var existingItem = Items.FirstOrDefault(item => item.ProductId == product.Id);
-
             // If such an item exists, increment its quantity by the specified amount
-            if (existingItem != null)
-            {
-                existingItem.Quantity += quantity;
-            }
-            else
-            {
-                // Since the item doesn't exist, add a new CartItem to Items with the product and quantity
-                Items.Add(new CartItem { ProductId = product.Id, Quantity = quantity });
-                // Assuming that CartItem has a ProductId property, otherwise you may need to set the Product itself
-            }
+            if(existingItem != null) existingItem.Quantity += quantity;
         }   
 
         // Method to remove an item from the cart or reduce its quantity
