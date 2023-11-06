@@ -16,12 +16,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<Cart>> GetCart()
         {
-            var cart = await _context.Carts
-                .Include(i => i.Items)
-                .ThenInclude(p => p.Product)
-                .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
-            
-            if(cart == null) return NotFound();
+            var cart = await RetrieveCart();
+
+            if (cart == null) return NotFound();
 
             return cart;
         }
@@ -29,14 +26,44 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> AddItemToCart(int productId, int quantity)
         {
+            var cart = await RetrieveCart();
 
-            return StatusCode(201);
+            if(cart == null) cart = CreateCart();
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) return NotFound();
+            cart.AddItem(product, quantity);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if(result) return StatusCode(201);
+            
+
+            return BadRequest(new ProblemDetails{Title = "Problem saving item to cart"});
         }
 
         [HttpDelete]
         public async Task<ActionResult> RemoveCartItem(int productId, int quantity)
         {
             return Ok();
+        }
+
+        private async Task<Cart> RetrieveCart()
+        {
+            return await _context.Carts
+                .Include(i => i.Items)
+                .ThenInclude(p => p.Product)
+                .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+        }
+
+        private Cart CreateCart()
+        {
+            var buyerId = Guid.NewGuid().ToString();
+            var cookieOptions = new CookieOptions{IsEssential = true, Expires = DateTime.Now.AddDays(30)};
+            Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+            var cart = new Cart{BuyerId = buyerId};
+            _context.Carts.Add(cart);
+
+            return cart;
         }
     }
 }
