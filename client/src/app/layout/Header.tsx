@@ -10,7 +10,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const midLinks = [
   { title: "catalog", path: "/catalog" },
@@ -53,7 +53,7 @@ export default function Header({
           alignItems: "center",
         }}
       >
-        <Box display="flex" alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
             FUNDI-STORE
           </Typography>
@@ -68,8 +68,15 @@ export default function Header({
           ))}
         </List>
 
-        <Box display='flex' alignItems='center'>
-          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
+        <Box display="flex" alignItems="center">
+          <IconButton
+            component={Link}
+            to="/cart"
+            size="large"
+            edge="start"
+            color="inherit"
+            sx={{ mr: 2 }}
+          >
             <Badge badgeContent="4" color="secondary">
               <ShoppingCart />
             </Badge>
