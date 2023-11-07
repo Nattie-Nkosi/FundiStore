@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +15,27 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Cart>> GetCart()
+        public async Task<ActionResult<CartDto>> GetCart()
         {
             var cart = await RetrieveCart();
 
             if (cart == null) return NotFound();
 
-            return cart;
+            return new CartDto
+            {
+                Id = cart.Id,
+                BuyerId = cart.BuyerId,
+                Items = cart.Items.Select(item => new CartItemDto
+                {
+                    ProductId = item.ProductId,
+                    Name = item.Product.Name,
+                    Price = item.Product.Price,
+                    PictureUrl = item.Product.PictureUrl,
+                    Type = item.Product.Type,
+                    Brand = item.Product.Brand,
+                    Quantity = item.Quantity
+                }).ToList()
+            };
         }
 
         [HttpPost]
@@ -44,7 +59,27 @@ namespace API.Controllers
         [HttpDelete]
         public async Task<ActionResult> RemoveCartItem(int productId, int quantity)
         {
-            return Ok();
+             var cart = await RetrieveCart();
+
+            // Check if the cart exists.
+            if (cart == null) return NotFound(new ProblemDetails { Title = "Cart not found" });
+
+            // Check if the product exists in the context to ensure referential integrity.
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) return NotFound(new ProblemDetails { Title = "Product not found" });
+
+            // Remove the item or reduce its quantity.
+            cart.RemoveItem(productId, quantity);
+
+            // If the product quantity after removal is zero or less, it will be removed by the RemoveItem method.
+
+            // Persist changes to the database.
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            // If changes couldn't be saved, return a BadRequest.
+            return BadRequest(new ProblemDetails { Title = "Problem removing item from cart" });
         }
 
         private async Task<Cart> RetrieveCart()
