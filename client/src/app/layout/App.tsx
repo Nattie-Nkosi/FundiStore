@@ -25,6 +25,8 @@ function App() {
         .then((cart) => setCart(cart))
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, [setCart]);
 
