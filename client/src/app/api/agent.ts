@@ -59,7 +59,7 @@ const TestErrors = {
   getValidationError: () => requests.get('buggy/validation-error'),
 }
 
-const cart = {
+const Cart = {
   get: () => requests.get('cart'),
   addItem: (productId: number, quantity = 1) => requests.post(`cart?productId=${productId}&quantity=${quantity}`, {}),
   removeItem: (productId: number, quantity = 1) => requests.delete(`cart?productId=${productId}&quantity=${quantity}`),
@@ -68,7 +68,7 @@ const cart = {
 const agent = {
   Catalog,
   TestErrors,
-  cart
+  Cart
 };
 
 export default agent;
