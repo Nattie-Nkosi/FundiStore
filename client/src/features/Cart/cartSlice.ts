@@ -17,13 +17,12 @@ const initialState: CartState = {
 // Creating an asynchronous thunk for adding items to the cart.
 export const addCartItemAsync = createAsyncThunk<Cart, { productId: number, quantity?: number }>(
   'cart/addCartItemAsync', // Naming this thunk for reference.
-  async ({ productId, quantity = 1 }) => {
+  async ({ productId, quantity = 1 }, thunkAPI) => {
     try {
       // Attempt to add an item to the cart via the API.
       return await agent.Cart.addItem(productId, quantity);
-    } catch (error) {
-      // If there's an error, log it to the console.
-      console.log(error)
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data })
     }
   }
 );
@@ -31,11 +30,11 @@ export const addCartItemAsync = createAsyncThunk<Cart, { productId: number, quan
 export const removeCartItemAsync = createAsyncThunk<void,
   { productId: number, quantity: number, name?: string }>(
     `cart/removeCartItemAsync`,
-    async ({ productId, quantity }) => {
+    async ({ productId, quantity }, thunkAPI) => {
       try {
         return await agent.Cart.removeItem(productId, quantity);
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        return thunkAPI.rejectWithValue({ error: error.data })
       }
     }
   );
@@ -58,9 +57,10 @@ export const cartSilce = createSlice({
       state.cart = action.payload;
       state.status = 'idle'
     });
-    builder.addCase(addCartItemAsync.rejected, (state) => {
+    builder.addCase(addCartItemAsync.rejected, (state, action) => {
       // When the add operation fails, reset the status.
       state.status = 'idle'
+      console.log(action.payload);
     });
     builder.addCase(removeCartItemAsync.pending, (state, action) => {
       state.status = 'pendingRemoveItem' + action.meta.arg.productId + action.meta.arg.name;
@@ -74,8 +74,9 @@ export const cartSilce = createSlice({
         state.cart.items.splice(itemIndex, 1);
       state.status = 'idle';
     });
-    builder.addCase(removeCartItemAsync.rejected, (state) => {
+    builder.addCase(removeCartItemAsync.rejected, (state, action) => {
       state.status = 'idle';
+      console.log(action.payload);
     })
   })
 })

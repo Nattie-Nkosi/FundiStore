@@ -115,7 +115,7 @@ export default function ProductDetailsPage() {
           <Grid item xs={6}>
             <LoadingButton
               disabled={item?.quantity === quantity}
-              loading={status.includes("pendingRemoveItem" + item?.productId)}
+              loading={status.includes("pending")}
               onClick={handleUpdateCart}
               sx={{ height: "55px" }}
               color="primary"
