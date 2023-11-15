@@ -11,32 +11,28 @@ import {
 } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../../app/models/product";
-import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { removeItem, setCart } from "../Cart/cartSlice";
+import { addCartItemAsync, removeCartItemAsync } from "../Cart/cartSlice";
+import { fetchProductAsync, productSelectors } from "./CatalogSlice";
 
 export default function ProductDetailsPage() {
-  const { cart } = useAppSelector((state) => state.cart);
+  const { cart, status } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const product = useAppSelector((state) =>
+    productSelectors.selectById(state, id!)
+  );
+  const { status: productStatus } = useAppSelector((state) => state.catalog);
   const [quantity, setQuantity] = useState(0);
-  const [submitting, setSubmitting] = useState(false);
   const item = cart?.items.find((i) => i.productId === product?.id);
 
   useEffect(() => {
     if (item) setQuantity(item.quantity);
-    id &&
-      agent.Catalog.details(parseInt(id))
-        .then((res) => setProduct(res))
-        .catch((err) => console.log(err))
-        .finally(() => setLoading(false));
-  }, [id, item]);
+    if (!product && id) dispatch(fetchProductAsync(parseInt(id)));
+  }, [dispatch, id, item, product]);
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     if (parseInt(event.currentTarget.value) >= 0) {
@@ -45,28 +41,26 @@ export default function ProductDetailsPage() {
   }
 
   function handleUpdateCart() {
-    if (!product) return;
-    setSubmitting(true);
     if (!item || quantity > item.quantity) {
       const updatedQuantity = item ? quantity - item.quantity : quantity;
-      agent.Cart.addItem(product.id, updatedQuantity)
-        .then((cart) => dispatch(setCart(cart)))
-        .catch((error) => console.log(error))
-        .finally(() => setSubmitting(false));
+      dispatch(
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        addCartItemAsync({ productId: product?.id!, quantity: updatedQuantity })
+      );
     } else {
       const updatedQuantity = item.quantity - quantity;
-      agent.Cart.removeItem(product.id, updatedQuantity)
-        .then(() =>
-          dispatch(
-            removeItem({ productId: product.id, quantity: updatedQuantity })
-          )
-        )
-        .catch((error) => console.log(error))
-        .finally(() => setSubmitting(false));
+      dispatch(
+        removeCartItemAsync({
+          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+          productId: product?.id!,
+          quantity: updatedQuantity,
+        })
+      );
     }
   }
 
-  if (loading) return <LoadingComponent message="Loading product..." />;
+  if (productStatus.includes("pending"))
+    return <LoadingComponent message="Loading product..." />;
 
   if (!product) return <NotFound />;
 
@@ -120,10 +114,8 @@ export default function ProductDetailsPage() {
           </Grid>
           <Grid item xs={6}>
             <LoadingButton
-              disabled={
-                item?.quantity === quantity || (!item && quantity === 0)
-              }
-              loading={submitting}
+              disabled={item?.quantity === quantity}
+              loading={status.includes("pendingRemoveItem" + item?.productId)}
               onClick={handleUpdateCart}
               sx={{ height: "55px" }}
               color="primary"

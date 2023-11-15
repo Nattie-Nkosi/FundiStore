@@ -28,6 +28,18 @@ export const addCartItemAsync = createAsyncThunk<Cart, { productId: number, quan
   }
 );
 
+export const removeCartItemAsync = createAsyncThunk<void,
+  { productId: number, quantity: number, name?: string }>(
+    `cart/removeCartItemAsync`,
+    async ({ productId, quantity }) => {
+      try {
+        return await agent.Cart.removeItem(productId, quantity);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  );
+
 // Creating a slice for the cart with various reducers and extra reducers.
 export const cartSilce = createSlice({
   name: 'cart',
@@ -35,25 +47,10 @@ export const cartSilce = createSlice({
   reducers: {
     setCart: (state, action) => {
       state.cart = action.payload // Update the cart with the new value.
-    },
-    // Reducer to remove an item from the cart.
-    removeItem: (state, action) => {
-      const { productId, quantity } = action.payload;
-      // Find the index of the item to remove.
-      const itemIndex = state.cart?.items.findIndex(i => i.productId === productId);
-      if (itemIndex === -1 || itemIndex === undefined) return;
-      // Decrease the quantity of the item.
-      state.cart!.items[itemIndex].quantity -= quantity;
-      // If the quantity reaches 0, remove the item from the cart.
-      if (state.cart!.items[itemIndex].quantity === 0)
-        state.cart?.items.splice(itemIndex, 1);
     }
   },
   extraReducers: (builder => {
-    // Handling different states of the addCartItemAsync thunk.
     builder.addCase(addCartItemAsync.pending, (state, action) => {
-      // When the add operation is pending, update the status.
-      console.log(action);
       state.status = 'pendingAddItem' + action.meta.arg.productId;
     });
     builder.addCase(addCartItemAsync.fulfilled, (state, action) => {
@@ -65,9 +62,22 @@ export const cartSilce = createSlice({
       // When the add operation fails, reset the status.
       state.status = 'idle'
     });
+    builder.addCase(removeCartItemAsync.pending, (state, action) => {
+      state.status = 'pendingRemoveItem' + action.meta.arg.productId + action.meta.arg.name;
+    });
+    builder.addCase(removeCartItemAsync.fulfilled, (state, action) => {
+      const { productId, quantity } = action.meta.arg;
+      const itemIndex = state.cart?.items.findIndex(i => i.productId === productId);
+      if (itemIndex === -1 || itemIndex === undefined) return;
+      state.cart!.items[itemIndex].quantity -= quantity;
+      if (state.cart?.items[itemIndex].quantity === 0)
+        state.cart.items.splice(itemIndex, 1);
+      state.status = 'idle';
+    });
+    builder.addCase(removeCartItemAsync.rejected, (state) => {
+      state.status = 'idle';
+    })
   })
 })
 
-export const { setCart, removeItem } = cartSilce.actions;
-
-/* Sorry for the annoying comments */
+export const { setCart } = cartSilce.actions;
