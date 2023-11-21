@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+store.db-shm
+store.db-wal
+
 # User-specific files
 *.rsuser
 *.suo
