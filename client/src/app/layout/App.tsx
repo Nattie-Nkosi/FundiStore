@@ -53,7 +53,7 @@ function App() {
         contrastText: "#000",
       },
     },
-    components: {
+    /* components: {
       MuiCssBaseline: {
         styleOverrides: {
           "::-webkit-scrollbar": {
@@ -67,7 +67,7 @@ function App() {
           },
         },
       },
-    },
+    }, */
   });
 
   function handleThemeChange() {
