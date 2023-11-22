@@ -1,11 +1,8 @@
 import {
-  FormControl,
   FormControlLabel,
   FormGroup,
   Grid,
   Paper,
-  Radio,
-  RadioGroup,
   Checkbox,
   Box,
   Typography,
@@ -17,10 +14,12 @@ import {
   fetchFilters,
   fetchProductsAsync,
   productSelectors,
+  setProductParams,
 } from "./CatalogSlice";
 import ProductList from "./ProductList";
 import { useEffect } from "react";
 import ProductSearch from "./ProductSearch";
+import RadioButtonGroup from "../../app/components/RadioButtonGroup";
 
 const sortOption = [
   { value: "name", label: "Alphabetical" },
@@ -30,8 +29,14 @@ const sortOption = [
 
 export default function Catalog() {
   const products = useAppSelector(productSelectors.selectAll);
-  const { productsLoaded, status, filtersLoaded, brands, types } =
-    useAppSelector((state) => state.catalog);
+  const {
+    productsLoaded,
+    status,
+    filtersLoaded,
+    brands,
+    types,
+    productParams,
+  } = useAppSelector((state) => state.catalog);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -53,18 +58,13 @@ export default function Catalog() {
         </Paper>
 
         <Paper sx={{ mb: 2, p: 2 }}>
-          <FormControl component="fieldset">
-            <RadioGroup>
-              {sortOption.map(({ value, label }) => (
-                <FormControlLabel
-                  value={value}
-                  label={label}
-                  control={<Radio />}
-                  key={value}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+          <RadioButtonGroup
+            selectedvalue={productParams.orderBy}
+            options={sortOption}
+            onChange={(e) =>
+              dispatch(setProductParams({ orderBy: e.target.value }))
+            }
+          />
         </Paper>
 
         <Paper sx={{ mb: 2, p: 2 }}>
