@@ -8,7 +8,7 @@ namespace API.Data
         public static async Task Initialize(StoreContext context, UserManager<User> userManager) 
         {
 
-            if(!userManager.Users.Any())
+            if (!userManager.Users.Any())
             {
                 var user = new User
                 {
@@ -18,7 +18,6 @@ namespace API.Data
 
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "Member");
-
 
                 var admin = new User
                 {
