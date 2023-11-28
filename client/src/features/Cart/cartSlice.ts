@@ -40,12 +40,12 @@ export const removeCartItemAsync = createAsyncThunk<void,
   );
 
 // Creating a slice for the cart with various reducers and extra reducers.
-export const cartSilce = createSlice({
+export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     setCart: (state, action) => {
-      state.cart = action.payload // Update the cart with the new value.
+      state.cart = action.payload
     }
   },
   extraReducers: (builder => {
@@ -53,12 +53,10 @@ export const cartSilce = createSlice({
       state.status = 'pendingAddItem' + action.meta.arg.productId;
     });
     builder.addCase(addCartItemAsync.fulfilled, (state, action) => {
-      // When the add operation is successful, update the cart and status.
       state.cart = action.payload;
       state.status = 'idle'
     });
     builder.addCase(addCartItemAsync.rejected, (state, action) => {
-      // When the add operation fails, reset the status.
       state.status = 'idle'
       console.log(action.payload);
     });
@@ -81,4 +79,4 @@ export const cartSilce = createSlice({
   })
 })
 
-export const { setCart } = cartSilce.actions;
+export const { setCart } = cartSlice.actions;

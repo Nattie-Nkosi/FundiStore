@@ -14,7 +14,7 @@ interface CatalogState {
   metaData: MetaData | null;
 }
 
-const productAdapter = createEntityAdapter<Product>();
+const productsAdapter = createEntityAdapter<Product>();
 
 function getAxiosParams(productParams: ProductParams) {
   const params = new URLSearchParams();
@@ -74,7 +74,7 @@ function initParams() {
 
 export const catalogSlice = createSlice({
   name: 'catalog',
-  initialState: productAdapter.getInitialState<CatalogState>({
+  initialState: productsAdapter.getInitialState<CatalogState>({
     productsLoaded: false,
     filtersLoaded: false,
     status: 'idle',
@@ -104,7 +104,7 @@ export const catalogSlice = createSlice({
       state.status = 'pendingFetchProducts';
     });
     builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
-      productAdapter.setAll(state, action.payload);
+      productsAdapter.setAll(state, action.payload);
       state.status = 'idle';
       state.productsLoaded = true
     });
@@ -116,7 +116,7 @@ export const catalogSlice = createSlice({
       state.status = 'pendingFetchProduct'
     });
     builder.addCase(fetchProductAsync.fulfilled, (state, action) => {
-      productAdapter.upsertOne(state, action.payload)
+      productsAdapter.upsertOne(state, action.payload)
       state.status = 'idle'
     });
     builder.addCase(fetchProductAsync.rejected, (state, action) => {
@@ -140,6 +140,6 @@ export const catalogSlice = createSlice({
 })
 
 
-export const productSelectors = productAdapter.getSelectors((state: RootState) => state.catalog);
+export const productSelectors = productsAdapter.getSelectors((state: RootState) => state.catalog);
 
 export const { setProductParams, resetProductParams, setMetaData, setPageNumber } = catalogSlice.actions;

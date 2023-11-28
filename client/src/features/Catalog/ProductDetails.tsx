@@ -16,7 +16,7 @@ import LoadingComponent from "../../app/layout/LoadingComponent";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { addCartItemAsync, removeCartItemAsync } from "../Cart/cartSlice";
-import { fetchProductAsync, productSelectors } from "./CatalogSlice";
+import { fetchProductAsync, productSelectors } from "./catalogSlice";
 
 export default function ProductDetailsPage() {
   const { cart, status } = useAppSelector((state) => state.cart);
@@ -41,7 +41,7 @@ export default function ProductDetailsPage() {
   }
 
   function handleUpdateCart() {
-    if (!item || quantity > item.quantity) {
+    if (!item || quantity > item?.quantity) {
       const updatedQuantity = item ? quantity - item.quantity : quantity;
       dispatch(
         // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
@@ -114,7 +114,9 @@ export default function ProductDetailsPage() {
           </Grid>
           <Grid item xs={6}>
             <LoadingButton
-              disabled={item?.quantity === quantity}
+              disabled={
+                item?.quantity === quantity || (!item && quantity === 0)
+              }
               loading={status.includes("pending")}
               onClick={handleUpdateCart}
               sx={{ height: "55px" }}

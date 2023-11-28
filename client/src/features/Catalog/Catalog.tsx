@@ -7,7 +7,7 @@ import {
   productSelectors,
   setPageNumber,
   setProductParams,
-} from "./CatalogSlice";
+} from "./catalogSlice";
 import ProductList from "./ProductList";
 import { useEffect } from "react";
 import ProductSearch from "./ProductSearch";
