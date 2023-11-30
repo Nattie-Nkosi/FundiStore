@@ -14,6 +14,7 @@ import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponent";
 import { useAppDispatch } from "../store/configureStore";
 import { setCart } from "../../features/Cart/cartSlice";
+import { fetchCurrentUser } from "../../features/account/accountSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -21,6 +22,7 @@ function App() {
 
   useEffect(() => {
     const buyerId: string | undefined = getCookie("buyerId");
+    dispatch(fetchCurrentUser());
     if (buyerId) {
       agent.Cart.get()
         .then((cart) => dispatch(setCart(cart)))
