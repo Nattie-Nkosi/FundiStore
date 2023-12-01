@@ -72,7 +72,13 @@ export default function Register() {
           fullWidth
           label="Username"
           autoFocus
-          {...register("username", { required: "Username is required" })}
+          {...register("username", {
+            required: "Username is required",
+            pattern: {
+              value: /^([ \u00c0-\u01ffa-zA-Z'])+$/,
+              message: "Not a valid name",
+            },
+          })}
           error={!!errors.username}
           helperText={errors?.username?.message as string}
         />
