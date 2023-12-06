@@ -2,17 +2,6 @@
 
 Welcome to Fundi-Store, an example E-commerce store inspired by Fundi Capital. This project was built entirely from scratch using the DotNet CLI tool and React Typescript. As a software developer intern at Fundi Capital, this project represents the culmination of my internship learnings and experiences.
 
-## Table of Contents
-
-- [Fundi-Store E-commerce Store](#fundi-store-e-commerce-store)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Features](#features)
-  - [Technologies Used](#technologies-used)
-  - [Deployment](#deployment)
-  - [Contributing](#contributing)
-  - [License](#license)
-
 ## Introduction
 
 Fundi-Store is a full-stack E-commerce application showcasing the integration of a .NET WebAPI backend with a React-based front-end. It allows users to browse products, add items to their cart, create orders, and explore various functionalities typically seen in an E-commerce platform.

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Paper } from "@mui/material";
+import { List, ListItem, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
@@ -112,6 +112,17 @@ export default function Register() {
           error={!!errors.password}
           helperText={errors?.password?.message as string}
         />
+
+        <Typography variant="caption">
+          Password must contain:
+          <List dense={true}>
+            <ListItem>At least 6 characters and at most 10 characters</ListItem>
+            <ListItem>At least one digit (0-9)</ListItem>
+            <ListItem>At least one lowercase letter (a-z)</ListItem>
+            <ListItem>At least one uppercase letter (A-Z)</ListItem>
+            <ListItem>At least one special character </ListItem>
+          </List>
+        </Typography>
 
         <LoadingButton
           loading={isSubmitting}
