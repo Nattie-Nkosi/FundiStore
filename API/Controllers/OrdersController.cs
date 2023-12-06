@@ -20,10 +20,10 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Order>>> GetOrders()
+        public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
             return await _context.Orders
-                    .Include(o => o.OrderItems)
+                    .ProjectOrderToOrderDto()
                     .Where(x => x.BuyerId == User.Identity.Name)
                     .ToListAsync();
         }
