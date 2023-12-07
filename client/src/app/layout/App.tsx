@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingComponent from "./LoadingComponent";
 import { useAppDispatch } from "../store/configureStore";
-import { fetchCartAsync } from "../../features/Cart/cartSlice";
+import { fetchCartAsync } from "../../features/cart/cartSlice";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 
 function App() {

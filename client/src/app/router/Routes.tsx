@@ -1,13 +1,13 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import HomePage from "../../features/Home/HomePage";
 import App from "../layout/App";
-import Catalog from "../../features/Catalog/Catalog";
-import ProductDetails from "../../features/Catalog/ProductDetails";
+import Catalog from "../../features/catalog/Catalog";
+import ProductDetails from "../../features/catalog/ProductDetails";
 import ContactPage from "../../features/Contact/ContactPage";
-import AboutPage from "../../features/About/AboutPage";
+import AboutPage from "../../features/about/AboutPage";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
-import CartPage from "../../features/Cart/CartPage";
+import CartPage from "../../features/cart/CartPage";
 import CheckoutPage from "../../features/checkout/CheckoutPage";
 import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";

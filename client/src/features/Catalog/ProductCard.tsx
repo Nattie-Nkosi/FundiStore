@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { currencyFormat } from "../../app/util/util";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { addCartItemAsync } from "../Cart/cartSlice";
+import { addCartItemAsync } from "../cart/cartSlice";
 
 interface Props {
   product: Product;

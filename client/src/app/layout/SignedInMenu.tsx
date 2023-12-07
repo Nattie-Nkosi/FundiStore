@@ -2,7 +2,7 @@ import { Button, Menu, Fade, MenuItem } from "@mui/material";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
 import { signOut } from "../../features/account/accountSlice";
-import { clearCart } from "../../features/Cart/cartSlice";
+import { clearCart } from "../../features/cart/cartSlice";
 
 export default function SignInMenu() {
   const dispatch = useAppDispatch();

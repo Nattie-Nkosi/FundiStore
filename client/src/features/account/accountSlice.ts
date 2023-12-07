@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { router } from "../../app/router/Routes";
 import { toast } from "react-toastify";
-import { setCart } from "../Cart/cartSlice";
+import { setCart } from "../cart/cartSlice";
 
 interface AccountState {
   user: User | null;

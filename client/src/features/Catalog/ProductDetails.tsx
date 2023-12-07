@@ -15,7 +15,7 @@ import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
-import { addCartItemAsync, removeCartItemAsync } from "../Cart/cartSlice";
+import { addCartItemAsync, removeCartItemAsync } from "../cart/cartSlice";
 import { fetchProductAsync, productSelectors } from "./catalogSlice";
 
 export default function ProductDetailsPage() {
