@@ -3,7 +3,7 @@ import HomePage from "../../features/Home/HomePage";
 import App from "../layout/App";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
-import ContactPage from "../../features/Contact/ContactPage";
+import ContactPage from "../../features/contact/ContactPage";
 import AboutPage from "../../features/about/AboutPage";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
