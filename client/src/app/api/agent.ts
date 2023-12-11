@@ -84,12 +84,13 @@ const Account = {
   login: (value: any) => requests.post('account/login', value),
   register: (value: any) => requests.post('account/register', value),
   currentUser: () => requests.get('account/currentUser'),
+  fetchAddress: () => requests.get('account/savedAddress')
 };
 
 const Orders = {
   list: () => requests.get('orders'),
   fetch: (id: number) => requests.get(`orders/${id}`),
-  create: (values: any) => requests.post('orders', values)
+  create: (values: any) => requests.post('orders', values),
 }
 
 const agent = {
