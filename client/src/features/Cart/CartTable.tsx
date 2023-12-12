@@ -41,12 +41,12 @@ export default function CartTable({ items, isCart = true }: Props) {
               key={item.productId}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="item">
+              <TableCell component="th" scope="row">
                 <Box display="flex" alignItems="center">
                   <img
+                    style={{ height: 50, marginRight: 20 }}
                     src={item.pictureUrl}
                     alt={item.name}
-                    style={{ height: 50, marginRight: 20 }}
                   />
                   <span>{item.name}</span>
                 </Box>
