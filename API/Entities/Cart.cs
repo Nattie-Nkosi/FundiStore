@@ -3,9 +3,11 @@ namespace API.Entities
     public class Cart
     {
         // Properties of the Cart class
-        public int Id { get; set; } // Unique identifier for the cart   
-        public string BuyerId { get; set; } // Identifier for the buyer/user owning the cart             
-        public List<CartItem> Items { get; set; } = new(); // A list to hold CartItem objects representing items in the cart 
+        public int Id { get; set; }   
+        public string BuyerId { get; set; }            
+        public List<CartItem> Items { get; set; } = new(); 
+        public string PaymentIntentId { get; set; }
+        public string ClientSecret { get; set; }
 
         // Method to add an item to the cart
         public void AddItem(Product product, int quantity)

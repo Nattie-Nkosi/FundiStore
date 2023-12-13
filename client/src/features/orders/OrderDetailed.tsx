@@ -1,8 +1,8 @@
 import { Box, Typography, Button, Grid } from "@mui/material";
-import CartTable from "../cart/CartTable";
-import CartSummary from "../cart/CartSummary";
 import { CartItem } from "../../app/models/cart";
 import { Order } from "../../app/models/order";
+import CartSummary from "../cart/CartSummary";
+import CartTable from "../cart/CartTable";
 
 interface Props {
   order: Order;
