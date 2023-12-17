@@ -53,21 +53,6 @@ function App() {
         contrastText: "#000",
       },
     },
-    /* components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          "::-webkit-scrollbar": {
-            // For Webkit browsers like Chrome, Safari
-            width: 0,
-            background: "transparent",
-          },
-          "*": {
-            // For Firefox
-            scrollbarWidth: "none",
-          },
-        },
-      },
-    }, */
   });
 
   function handleThemeChange() {
