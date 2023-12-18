@@ -10,9 +10,7 @@ import { StripeInput } from "./StripeInput";
 import { StripeElementType } from "@stripe/stripe-js";
 
 interface Props {
-  cardState: {
-    elementError: { [key in StripeElementType]?: string };
-  };
+  cardState: { elementError: { [key in StripeElementType]?: string } };
   onCardInputChange: (event: any) => void;
 }
 
