@@ -28,10 +28,9 @@ namespace API.Services
                 {
                     Amount = subtotal + deliveryFee,
                     Currency = "usd",
-                    PaymentMethodTypes = new List<string> {"cart"}
+                    PaymentMethodTypes = new List<string> {"card"}
                 };
-                intent = await service.CreateAsync(options);
-                
+                intent = await service.CreateAsync(options);   
             }
             else 
             {
