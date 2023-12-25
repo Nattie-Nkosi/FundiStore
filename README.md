@@ -1,10 +1,10 @@
 # Fundi-Store E-commerce Store
 
-Welcome to Fundi-Store, an example E-commerce store inspired by Fundi Capital. This project was built entirely from scratch using the DotNet CLI tool and React Typescript. As a software developer intern at Fundi Capital, this project represents the culmination of my internship learnings and experiences.
+Welcome to Fundi-Store, an example E-commerce store inspired by Fundi Capital. This project was built entirely from scratch using the DotNet(C#) tool and React Typescript.
 
 ## Introduction
 
-Fundi-Store is a full-stack E-commerce application showcasing the integration of a .NET WebAPI backend with a React-based front-end. It allows users to browse products, add items to their cart, create orders, and explore various functionalities typically seen in an E-commerce platform.
+Fundi-Store is a full-stack E-commerce application showcasing the integration of a .NET v7 API backend with a React-based front-end. It allows users to browse products, add items to their cart, create orders, and explore various functionalities typically seen in an E-commerce platform.
 
 ## Features
 
@@ -18,18 +18,20 @@ Fundi-Store is a full-stack E-commerce application showcasing the integration of
 
 ## Technologies Used
 
-- **DotNet CLI**: Setting up the developer environment and creating the .Net WebAPI application.
-- **Vite React Typescript**: Building the client-side front-end React application.
-- **Entity Framework**: Managing database operations.
-- **ASP.NET Identity**: Handling user authentication and registration.
-- **React Router**: Managing client-side routing.
-- **Material Design**: Creating an aesthetically pleasing UI.
-- **React Hook Form**: Developing reusable form components.
-- **Automapper**: Streamlining object-to-object mapping.
+- **Front-end**: React, TypeScript.
+- **Styling**: Material UI.
+- **Backend**: .Net 7, LINQ, Entity Framework.
+- **Database**: PostgreSQL.
+- **Authentication**: .Net Identity.
+- **Deployment**: [fly.io](https://fundi.fly.dev)
 
 ## Deployment
 
-The application has been deployed to fly.io for live testing and demonstration purposes. Access the live version at ``.
+The application has been deployed to fly.io for live testing and demonstration purposes. Access the live version at `https://fundi.fly.dev`.
+
+## Closing
+
+As a software developer intern at Fundi Capital, this project represents the culmination of my internship learnings and experiences.
 
 ## Contributing
 
