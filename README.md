@@ -1,4 +1,4 @@
-# Fundi-Store E-commerce Store
+# Fundi-Store Portfolio Project
 
 Welcome to Fundi-Store, an example E-commerce store inspired by Fundi Capital. This project was built entirely from scratch using the DotNet(C#) tool and React Typescript.
 
@@ -23,7 +23,7 @@ Fundi-Store is a full-stack E-commerce application showcasing the integration of
 - **Backend**: .Net 7, LINQ, Entity Framework.
 - **Database**: PostgreSQL.
 - **Authentication**: .Net Identity.
-- **Deployment**: [fly.io](https://fundi.fly.dev)
+- **Deployment Tools**: Docker, Github Action
 
 ## Deployment
 
