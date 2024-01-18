@@ -6,6 +6,10 @@ Welcome to Fundi-Store, an example E-commerce store inspired by Fundi Capital. T
 
 Fundi-Store is a full-stack E-commerce application showcasing the integration of a .NET v7 API backend with a React-based front-end. It allows users to browse products, add items to their cart, create orders, and explore various functionalities typically seen in an E-commerce platform.
 
+![image](https://github.com/Nattie-Nkosi/FundiStore/assets/36708180/3e21d7e3-0ec4-4f55-af10-b714e38dd20f)
+
+![image](https://github.com/Nattie-Nkosi/FundiStore/assets/36708180/68cae069-a98e-4e2f-a971-41956c6c63c8)
+
 ## Features
 
 - **User Authentication**: Utilizes ASP.NET Identity for secure login and registration.
